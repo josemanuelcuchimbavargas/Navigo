@@ -2,7 +2,7 @@
 "use strict";
 // Cargamos los módulos de express y body-parser
 var express = require("express");
-
+const path = require('path');
 var bodyParser = require("body-parser");
 // Llamamos a express para poder crear el servidor
 var app = express();
@@ -10,13 +10,21 @@ var app = express();
 var cors = require("cors");
 
 var app = express();
-app.use(cors());
 
+var multer = require("multer");
+
+var upload = multer();
+
+app.use(cors());
+const directorioDeImagenes = path.join(__dirname, 'files');
+app.use('/files', express.static(directorioDeImagenes));
 app.use(
   cors({
     origin: "*",
   })
 );
+
+app.use(upload.single('file'));
 
 // Importamos las rutas
 var user_routes = require("./routes/user");
