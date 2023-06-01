@@ -124,3 +124,77 @@ exports.deleteStoresById = async function (req, res) {
     res.status(500).send({ error: ex.message });
   }
 };
+
+exports.updateStore = async function (req, res) {
+  try {
+    const Store = await StoreModel.findOne({
+      user_id: req.user.user_id,
+      _id: req.body._id,
+    });
+
+    const categoriesArray = JSON.parse(req.body.categories);
+    const categoryIds = categoriesArray.map((category) =>
+      ObjectId(category._id)
+    );
+
+    const payments_methodsArray = JSON.parse(req.body.payments_methods);
+    const payments_methodsIds = payments_methodsArray.map((category) =>
+      ObjectId(category._id)
+    );
+
+    const updateQuery = {
+      $set: {
+        name_business: req.body.name_business,
+        description: req.body.description,
+        categories: categoryIds,
+        address: req.body.address,
+        phone: req.body.phone,
+        schedule: req.body.schedule,
+        lan: req.body.lan,
+        lon: req.body.lon,
+        payments_methods: payments_methodsIds,
+        domicilio: req.body.domicilio,
+      },
+    };
+
+    //Logica para eliminar y añadir el nuevo archivo seleccionado
+    if (req.body.logo != "" && req.body.logo != null) {
+      let route = path.join(__dirname, "..", "files", Store.logo);
+
+      fs.unlink(route, (error) => {
+        if (error) {
+          console.error("Error al eliminar el archivo:", error);
+        } else {
+          console.log("Archivo eliminado correctamente");
+        }
+      });
+
+      const file = req.file;
+      const originalname = file.originalname;
+      const extension = path.extname(originalname);
+      const uniqueFilename = Date.now() + extension; // Generar un nombre único basado en la fecha actual y la extensión del archivo
+
+      const filePath = path.join(__dirname, "..", "files", uniqueFilename); // Ruta completa del archivo
+
+      fs.writeFile(filePath, file.buffer, (err) => {
+        if (err) {
+          res.status(500).json({ error: "Error al guardar el archivo" });
+        }
+      });
+
+      if (uniqueFilename) {
+        updateQuery.$set.logo = uniqueFilename;
+      }
+    }
+
+    await StoreModel.updateOne(
+      {
+        _id: req.body._id,
+      },
+      updateQuery
+    );
+    res.status(200).send({ msg: "Registro actualizado exitosamente" });
+  } catch (ex) {
+    res.status(500).send({ error: ex.message });
+  }
+};

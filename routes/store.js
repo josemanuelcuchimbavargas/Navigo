@@ -13,6 +13,7 @@ var md_auth = require("../middlewares/authenticated");
 api.post("/register/store", md_auth.ensureAuth, StoreController.registerStore);
 api.get("/get/store", md_auth.ensureAuth, StoreController.getStoresById);
 api.post("/delete/store", md_auth.ensureAuth, StoreController.deleteStoresById);
+api.post("/update/store", md_auth.ensureAuth, StoreController.updateStore);
 
 
 // Exportamos la configuración
