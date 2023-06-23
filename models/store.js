@@ -17,7 +17,8 @@ var StoreSchema = Schema({
   logo: String, //Logo del negocio y si no tiene se coloca uno por defecto
   payments_methods: [{ type: Schema.Types.ObjectId, ref: "payments_methods" }], //Metodos de pago
   domicilio: Boolean, //Para saber si el usuario maneja domicilio o no.
-  user_id: Schema.Types.ObjectId
+  user_id: Schema.Types.ObjectId,
+  status: Boolean
 });
 
 /*const ScheduleSchema = new Schema({

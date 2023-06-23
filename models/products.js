@@ -7,6 +7,7 @@ var Schema = mongoose.Schema;
 var ProductsSchema = Schema({
   name: String,
   description: String,
+  available: Boolean,
   id_store: Schema.Types.ObjectId
 });
 // Exportamos el modelo para usarlo en otros ficheros

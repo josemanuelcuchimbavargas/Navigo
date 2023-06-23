@@ -7,6 +7,40 @@ function getDate() {
     return date;
 };
 
+const removeAccents = (str) => {
+  return str
+    .normalize("NFD")
+    .replace(/[\u0300-\u0301\u0308\u030C]/g, "")
+    .normalize();
+};
+
+function convertKM(latUsuario, lonUsuario, latTienda, lonTienda) {
+    const radioTierra = 6371; // Radio de la Tierra en kilómetros
+  
+    const lat1 = degToRad(latUsuario);
+    const lon1 = degToRad(lonUsuario);
+    const lat2 = degToRad(latTienda);
+    const lon2 = degToRad(lonTienda);
+  
+    const dLat = lat2 - lat1;
+    const dLon = lon2 - lon1;
+  
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  
+    const distancia = radioTierra * c;
+    console.log("DISTANCIA ",distancia);
+    return distancia.toFixed(2);
+  }
+  
+  function degToRad(degrees) {
+    return degrees * (Math.PI / 180);
+  }
+
 module.exports = {
-    getDate: getDate
+    getDate: getDate,
+    removeAccents: removeAccents,
+    convertKM:convertKM
 }

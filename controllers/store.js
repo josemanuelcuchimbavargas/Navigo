@@ -1,6 +1,7 @@
 "use strict";
 // Cargamos los modelos para usarlos posteriormente
 var StoreModel = require("../models/store");
+var ProductsModel = require("../models/products");
 const path = require("path");
 const fs = require("fs");
 const ObjectId = require("mongodb").ObjectId;
@@ -70,6 +71,7 @@ exports.registerStore = async function (req, res) {
     payments_methods: payments_methodsIds,
     domicilio: domicilio,
     user_id: req.user.user_id,
+    status: false
   });
 
   await newStore.save((err) => {
@@ -107,6 +109,11 @@ exports.deleteStoresById = async function (req, res) {
     });
 
     if (resultado.deletedCount === 1) {
+      
+      const resultadoProducts = await ProductsModel.deleteMany({
+        id_store: ObjectId(req.body._id),
+      });
+
       fs.unlink(route, (error) => {
         if (error) {
           console.error("Error al eliminar el archivo:", error);
@@ -153,7 +160,7 @@ exports.updateStore = async function (req, res) {
         lan: req.body.lan,
         lon: req.body.lon,
         payments_methods: payments_methodsIds,
-        domicilio: req.body.domicilio,
+        domicilio: req.body.domicilio
       },
     };
 

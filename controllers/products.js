@@ -20,6 +20,7 @@ exports.insertProductsByStore = async function (req, res) {
     const productsStore = new ProductsModel({
       name: req.body.name,
       description: req.body.description,
+      available: req.body.available,
       id_store: req.body.id_store,
     });
 
