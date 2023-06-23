@@ -15,7 +15,7 @@ exports.registerStore = async function (req, res) {
   if (nit != null && nit != "") {
     const findNit = await StoreModel.findOne({ nit: nit });
     if (findNit) {
-      res.status(500).json({
+      return res.status(500).json({
         message: `El NIT ${nit} ya se encuentra registrado en nuestro sistema. Si esto es un error o algún caso de plagio, por favor, contáctanos a nuestro equipo de soporte.`,
       });
     }
@@ -30,7 +30,7 @@ exports.registerStore = async function (req, res) {
 
   fs.writeFile(filePath, file.buffer, (err) => {
     if (err) {
-      res.status(500).json({ error: "Error al guardar el archivo" });
+      return res.status(500).json({ error: "Error al guardar el archivo" });
     }
   });
 
@@ -77,9 +77,9 @@ exports.registerStore = async function (req, res) {
   await newStore.save((err) => {
     if (err) {
       fs.promises.unlink(filePath);
-      res.status(500).send({ error: err });
+      return res.status(500).send({ error: err });
     } else {
-      res.status(200).send({ msg: "Negocio creado de manera exitosa." });
+      return res.status(200).send({ msg: "Negocio creado de manera exitosa." });
     }
   });
 };
