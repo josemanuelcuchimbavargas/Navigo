@@ -31,7 +31,6 @@ function convertKM(latUsuario, lonUsuario, latTienda, lonTienda) {
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   
     const distancia = radioTierra * c;
-    console.log("DISTANCIA ",distancia);
     return distancia.toFixed(2);
   }
   
@@ -39,8 +38,18 @@ function convertKM(latUsuario, lonUsuario, latTienda, lonTienda) {
     return degrees * (Math.PI / 180);
   }
 
+  function convertKMtoMeters(km) {
+    if (km < 1) {
+      const meters = km * 1000;
+      return meters + " metros";
+    } else {
+      return km + " kilometros";
+    }
+  }
+
 module.exports = {
     getDate: getDate,
     removeAccents: removeAccents,
-    convertKM:convertKM
+    convertKM:convertKM,
+    convertKMtoMeters:convertKMtoMeters
 }

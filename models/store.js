@@ -18,7 +18,8 @@ var StoreSchema = Schema({
   payments_methods: [{ type: Schema.Types.ObjectId, ref: "payments_methods" }], //Metodos de pago
   domicilio: Boolean, //Para saber si el usuario maneja domicilio o no.
   user_id: Schema.Types.ObjectId,
-  status: Boolean
+  status: Boolean,
+  distance: Number
 });
 
 /*const ScheduleSchema = new Schema({

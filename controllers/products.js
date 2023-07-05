@@ -26,7 +26,6 @@ exports.insertProductsByStore = async function (req, res) {
 
     await productsStore.save((err) => {
       if (err) {
-        fs.promises.unlink(filePath);
         res.status(500).send({ error: err });
       } else {
         res.status(200).send({ msg: "Producto creado de manera exitosa." });
