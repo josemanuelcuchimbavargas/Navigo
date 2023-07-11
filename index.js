@@ -28,7 +28,7 @@ mongoose
 
     // CREAR EL SERVIDOR WEB CON NODEJS
     app.listen(port, () => {
-      console.log("servidor corriendo en http://localhost:3800");
+      console.log("servidor corriendo en http://146.190.38.98:3800");
     });
   })
   // Si no se conecta correctamente escupimos el error
