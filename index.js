@@ -12,9 +12,12 @@ mongoose.Promise = global.Promise;
 //mongodb+srv://digitalesn140:vcHBinh4ha9ppuoU@shopfind.zlmezpk.mongodb.net/StartupCluster&authSource=admin
 //mongodb://0.0.0.0:27017/ShopFind
 //mongodb+srv://digitalesn140:vcHBinh4ha9ppuoU@shopfind.zlmezpk.mongodb.net/ShopFind&authSource=ShopFind
+//mongodb+srv://digitalesn140:vcHBinh4ha9ppuoU@shopfind.zlmezpk.mongodb.net/ShopFind .. CLUSTER
+//mongodb://127.0.0.1:27017/Navigo?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+1.10.1
+
 mongoose
   .connect(
-    "mongodb+srv://digitalesn140:vcHBinh4ha9ppuoU@shopfind.zlmezpk.mongodb.net/ShopFind",
+    "mongodb://127.0.0.1:27017/Navigo?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+1.10.1",
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,
