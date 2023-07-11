@@ -49,6 +49,7 @@ exports.registerUser = async function (req, res) {
       tel: req.body.tel,
       password: encrypt.generateHashPassword(req.body.password),
       gender: req.body.gender,
+      tipo_usuario: "usuario",
       created_date: req.body.created_date,
       updated_date: req.body.updated_date,
       deleted_date: req.body.deleted_date,
