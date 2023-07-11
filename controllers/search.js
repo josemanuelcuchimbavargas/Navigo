@@ -3,6 +3,7 @@
 var ProductsModel = require("../models/products");
 var StoreModel = require("../models/store");
 var CategoriesModel = require("../models/categories");
+var AnnouncementModel = require("../models/announcements");
 const {
   removeAccents,
   convertKM,
@@ -250,7 +251,7 @@ exports.search = async function (req, res) {
         km: km,
         distance: convertKMtoMeters(km),
         type: "product",
-        status: p.store.status
+        status: p.store.status,
       });
     });
 
@@ -263,14 +264,12 @@ exports.search = async function (req, res) {
         km: km,
         distance: convertKMtoMeters(km),
         type: "store",
-        status: s.status
+        status: s.status,
       });
     });
 
     //----- Logica filtrar tiendas verificadas y distancias. -----//
-    Result = Result.filter(
-      (r) => r.status === true && r.km <= maxDistancia
-    );
+    Result = Result.filter((r) => r.status === true && r.km <= maxDistancia);
 
     //----- Logica ordenamiento de menor a mayor por distancia del usuario. -----//
     Result.sort((a, b) => a.km - b.km);
@@ -297,6 +296,11 @@ exports.view = async function (req, res) {
     if (type == "product") {
       let Product = await ProductsModel.findOne({ _id: _id });
       let Store = await StoreModel.findOne({ _id: Product.id_store });
+      let Announcement = await AnnouncementModel.findOne({
+        id_store: Product.id_store,
+        active: true,
+      });
+
       Resultado = {
         name_product: Product.name,
         descripcion_product: Product.description,
@@ -309,9 +313,17 @@ exports.view = async function (req, res) {
         lan: Store.lan,
         lon: Store.lon,
         domicilio: Store.domicilio,
+        title_announcement: Announcement != null ? Announcement.title : "",
+        description_announcement:
+          Announcement != null ? Announcement.description : "",
+        id_store: Product.id_store
       };
     } else {
       let Store = await StoreModel.findOne({ _id: _id });
+      let Announcement = await AnnouncementModel.findOne({
+        id_store: _id,
+        active: true,
+      });
       Resultado = {
         name_store: Store.name_business,
         description_store: Store.description,
@@ -322,6 +334,10 @@ exports.view = async function (req, res) {
         lon: Store.lon,
         logo: Store.logo,
         domicilio: Store.domicilio,
+        title_announcement: Announcement != null ? Announcement.title : "",
+        description_announcement:
+          Announcement != null ? Announcement.description : "",
+        id_store: _id
       };
     }
     res.status(200).send({ Resultado });

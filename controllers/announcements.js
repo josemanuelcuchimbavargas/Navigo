@@ -1,14 +1,18 @@
 "use strict";
 // Cargamos los modelos para usarlos posteriormente
 var AnnouncementModel = require("../models/announcements");
-
+const ObjectId = require("mongodb").ObjectId;
 exports.insertAnnouncementByStore = async function (req, res) {
   try {
+    const announcements = await AnnouncementModel.find({
+      id_store: req.body.id_store,
+    });
+
     const announcementStore = new AnnouncementModel({
       title: req.body.title,
       description: req.body.description,
-      active: false,
-      id_store: req.body.id_store
+      active: announcements.length == 0 ? true : false,
+      id_store: req.body.id_store,
     });
 
     await announcementStore.save((err) => {
@@ -49,6 +53,33 @@ exports.deleteAnnouncementById = async function (req, res) {
         .status(500)
         .send({ error: "Ocurrio un error al eliminar el registro" });
     }
+  } catch (ex) {
+    res.status(500).send({ error: ex.message });
+  }
+};
+
+exports.activeAnnouncementById = async function (req, res) {
+  try {
+
+    const announcement = await AnnouncementModel.updateMany(
+      { id_store: ObjectId(req.body.store_id) }, // Filtro para seleccionar los documentos a actualizar
+      { $set: { active: false } }
+    );
+
+    const updateQuery = {
+      $set: {
+        active: req.body.status,
+      },
+    };
+
+    await AnnouncementModel.updateOne(
+      {
+        _id: req.body._id,
+      },
+      updateQuery
+    );
+
+    res.status(200).send({ msg: "Anuncio activado" });
   } catch (ex) {
     res.status(500).send({ error: ex.message });
   }

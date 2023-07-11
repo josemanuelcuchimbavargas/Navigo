@@ -34,6 +34,7 @@ var payments_methods_routes = require("./routes/payments_methods");
 var products_routes = require("./routes/products");
 var search_routes = require("./routes/search");
 var announcement_routes = require("./routes/announcements");
+var subscription_routes = require("./routes/subscriptions");
 
 //cargar middlewares
 //un metodo que se ejecuta antes que llegue a un controlador
@@ -49,6 +50,7 @@ app.use("/api", payments_methods_routes);
 app.use("/api", products_routes);
 app.use("/api", search_routes);
 app.use("/api", announcement_routes);
+app.use("/api", subscription_routes);
 
 // exportamos este módulo para poder usar la variable app fuera de este archivo
 module.exports = app;

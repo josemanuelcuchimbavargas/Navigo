@@ -2,7 +2,7 @@
 // Cargamos el módulo de express para poder crear rutas
 var express = require("express");
 // Cargamos el controlador
-var AnnouncementController = require("../controllers/announcements");
+var SubscriptionController = require("../controllers/subscriptions");
 
 // Llamamos al router
 var api = express.Router();
@@ -11,24 +11,29 @@ var md_auth = require("../middlewares/authenticated");
 
 // USUARIO
 api.post(
-  "/announcement/get",
+  "/subscription/post",
   md_auth.ensureAuth,
-  AnnouncementController.getAnnouncement
+  SubscriptionController.insertSubscription
 );
 api.post(
-  "/announcement/post",
+  "/subscription/get",
   md_auth.ensureAuth,
-  AnnouncementController.insertAnnouncementByStore
+  SubscriptionController.getSubscriptions
 );
 api.post(
-  "/announcement/delete",
+  "/subscription/delete",
   md_auth.ensureAuth,
-  AnnouncementController.deleteAnnouncementById
+  SubscriptionController.deleteSubscriptionById
 );
 api.post(
-  "/announcement/active",
+  "/subscription/getById",
   md_auth.ensureAuth,
-  AnnouncementController.activeAnnouncementById
+  SubscriptionController.getSubscriptionsById
+);
+api.post(
+  "/subscription/getsettings",
+  md_auth.ensureAuth,
+  SubscriptionController.getSubscriptionsSettings
 );
 
 // Exportamos la configuración

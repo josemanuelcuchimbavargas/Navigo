@@ -41,9 +41,9 @@ function convertKM(latUsuario, lonUsuario, latTienda, lonTienda) {
   function convertKMtoMeters(km) {
     if (km < 1) {
       const meters = km * 1000;
-      return meters + " metros";
+      return meters + " m";
     } else {
-      return km + " kilometros";
+      return km + " km";
     }
   }
 

@@ -23,7 +23,7 @@ mongoose
   .then(() => {
     // Cuando se realiza la conexión, lanzamos este mensaje por consola
     console.log(
-      "La conexión a la base de datos ShopFind se ha realizado correctamente"
+      "La conexión a la base de datos Navigo se ha realizado correctamente"
     );
 
     // CREAR EL SERVIDOR WEB CON NODEJS
