@@ -1,6 +1,7 @@
 // Utilizar funcionalidades del Ecmascript 6
 "use strict";
 // Cargamos los módulos de express y body-parser
+
 var express = require("express");
 const path = require("path");
 var bodyParser = require("body-parser");

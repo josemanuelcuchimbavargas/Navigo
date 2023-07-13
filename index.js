@@ -2,6 +2,7 @@
 "use strict";
 // Cargamos el módulo de mongoose para poder conectarnos a MongoDB
 var mongoose = require("mongoose");
+const https = require("https");
 // *Cargamos el fichero app.js con la configuración de Express
 var app = require("./app");
 // Creamos la variable PORT para indicar el puerto en el que va a funcionar el servidor
@@ -30,8 +31,14 @@ mongoose
     );
 
     // CREAR EL SERVIDOR WEB CON NODEJS
-    app.listen(port, () => {
-      console.log("servidor corriendo en http://146.190.38.98:3800");
+    // app.listen(port, () => {
+    //  console.log("servidor corriendo en http://146.190.38.98:3800");
+    // });
+
+    https.createServer(app).listen(3800, () => {
+      console.log(
+        "server running " + "https://navigoapi.com:3800"
+      );
     });
   })
   // Si no se conecta correctamente escupimos el error
