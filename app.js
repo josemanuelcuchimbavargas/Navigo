@@ -10,8 +10,6 @@ var app = express();
 
 var cors = require("cors");
 
-var app = express();
-
 var multer = require("multer");
 
 var upload = multer();
