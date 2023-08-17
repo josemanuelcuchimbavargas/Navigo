@@ -78,7 +78,9 @@ exports.forgotPassword = async function (req, res) {
       email: email,
       deleted_date: { $eq: null },
     }).session(session);
-
+    console.log(email);
+    console.log("-----------");
+    console.log(USER);
     if (USER != null) {
       let pass = generatePassword(6);
 
