@@ -50,9 +50,9 @@ exports.registerUser = async function (req, res) {
       password: encrypt.generateHashPassword(req.body.password),
       gender: req.body.gender,
       tipo_usuario: "usuario",
-      created_date: req.body.created_date,
-      updated_date: req.body.updated_date,
-      deleted_date: req.body.deleted_date,
+      created_date: new Date(),
+      updated_date: null,
+      deleted_date: null,
     });
 
     await USER.save((err) => {
@@ -85,6 +85,7 @@ exports.forgotPassword = async function (req, res) {
       const updatedUser = await User.updateOne(
         { _id: USER._id },
         {
+          updated_date: new Date(),
           password: encrypt.generateHashPassword(pass),
         }
       ).session(session);
