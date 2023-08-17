@@ -160,7 +160,7 @@ exports.forgotPassword = async function (req, res) {
         throw new Error("Ocurrió un error al restablecer la contraseña");
       }
     } else {
-      throw new Error("Por favor ingrese un email registrado.");
+      throw new Error("Por favor ingrese un email registrado." + "HOLA");
     }
   } catch (error) {
     await session.abortTransaction();
