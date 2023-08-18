@@ -69,18 +69,17 @@ exports.registerUser = async function (req, res) {
 exports.forgotPassword = async function (req, res) {
   var { email } = req.body;
 
-  const session = await mongoose.startSession();
+  //const session = await mongoose.startSession();
 
   try {
-    session.startTransaction();
+    // session.startTransaction();
 
     const USER = await User.findOne({
       email: email,
       deleted_date: { $eq: null },
-    }).session(session);
-    console.log(email);
-    console.log("-----------");
-    console.log(USER);
+    });
+    //.session(session);
+
     if (USER != null) {
       let pass = generatePassword(6);
 
@@ -90,7 +89,8 @@ exports.forgotPassword = async function (req, res) {
           updated_date: new Date(),
           password: encrypt.generateHashPassword(pass),
         }
-      ).session(session);
+      );
+      //.session(session);
 
       if (updatedUser.ok > 0) {
         // Configurar el transporte SMTP
@@ -150,8 +150,8 @@ exports.forgotPassword = async function (req, res) {
 
         await transporter.sendMail(mailOptions);
 
-        await session.commitTransaction();
-        session.endSession();
+        //   await session.commitTransaction();
+        //   session.endSession();
 
         return res.status(200).send({
           msg: "Se ha enviado un correo electrónico con una contraseña temporal.",
@@ -163,8 +163,8 @@ exports.forgotPassword = async function (req, res) {
       throw new Error("Por favor ingrese un email registrado." + "HOLA");
     }
   } catch (error) {
-    await session.abortTransaction();
-    session.endSession();
+    // await session.abortTransaction();
+    // session.endSession();
 
     return res.status(500).send({
       msg: error.message || "Ocurrió un error al restablecer la contraseña",
