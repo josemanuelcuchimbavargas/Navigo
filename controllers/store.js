@@ -71,7 +71,7 @@ exports.registerStore = async function (req, res) {
     payments_methods: payments_methodsIds,
     domicilio: domicilio,
     user_id: req.user.user_id,
-    status: false
+    status: false,
   });
 
   await newStore.save((err) => {
@@ -109,7 +109,6 @@ exports.deleteStoresById = async function (req, res) {
     });
 
     if (resultado.deletedCount === 1) {
-      
       const resultadoProducts = await ProductsModel.deleteMany({
         id_store: ObjectId(req.body._id),
       });
@@ -160,7 +159,7 @@ exports.updateStore = async function (req, res) {
         lan: req.body.lan,
         lon: req.body.lon,
         payments_methods: payments_methodsIds,
-        domicilio: req.body.domicilio
+        domicilio: req.body.domicilio,
       },
     };
 
@@ -201,6 +200,44 @@ exports.updateStore = async function (req, res) {
       updateQuery
     );
     res.status(200).send({ msg: "Registro actualizado exitosamente" });
+  } catch (ex) {
+    res.status(500).send({ error: ex.message });
+  }
+};
+
+exports.enableStore = async function (req, res) {
+  try {
+    
+    const updateQuery = {
+      $set: {
+        name_business: req.body.name_business,
+        description: req.body.description,
+        address: req.body.address,
+        phone: req.body.phone,
+        schedule: req.body.schedule,
+        lan: req.body.lan,
+        lon: req.body.lon,
+        domicilio: req.body.domicilio,
+        status: req.body.status,
+      }
+    };
+    await StoreModel.updateOne(
+      {
+        _id: req.body._id,
+      },
+      updateQuery
+    );
+    res.status(200).send({ msg: "Registro actualizado exitosamente" });
+  } catch (ex) {
+    res.status(500).send({ error: ex.message });
+  }
+};
+
+exports.getStores = async function (req, res) {
+  try {
+    const Stores = await StoreModel.find({});
+
+    res.status(200).send({ data: Stores });
   } catch (ex) {
     res.status(500).send({ error: ex.message });
   }
