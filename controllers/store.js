@@ -235,7 +235,9 @@ exports.enableStore = async function (req, res) {
 
 exports.getStores = async function (req, res) {
   try {
-    const Stores = await StoreModel.find({});
+    const Stores = await StoreModel.find({
+      restart : false
+    });
 
     res.status(200).send({ data: Stores });
   } catch (ex) {
