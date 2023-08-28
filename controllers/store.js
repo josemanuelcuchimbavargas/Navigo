@@ -207,7 +207,6 @@ exports.updateStore = async function (req, res) {
 
 exports.enableStore = async function (req, res) {
   try {
-    
     const updateQuery = {
       $set: {
         name_business: req.body.name_business,
@@ -219,7 +218,7 @@ exports.enableStore = async function (req, res) {
         lon: req.body.lon,
         domicilio: req.body.domicilio,
         status: req.body.status,
-      }
+      },
     };
     await StoreModel.updateOne(
       {
@@ -233,12 +232,19 @@ exports.enableStore = async function (req, res) {
   }
 };
 
-exports.getStores = async function (req, res) {
+exports.getStoresInactive = async function (req, res) {
   try {
+    const Stores = await StoreModel.find({ status: false });
 
-    const Stores = await StoreModel.find({
-      status : false
-    });
+    res.status(200).send({ data: Stores });
+  } catch (ex) {
+    res.status(500).send({ error: ex.message });
+  }
+};
+
+exports.getStoresActive = async function (req, res) {
+  try {
+    const Stores = await StoreModel.find({ status: true });
 
     res.status(200).send({ data: Stores });
   } catch (ex) {

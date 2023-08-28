@@ -15,8 +15,8 @@ api.get("/get/store", md_auth.ensureAuth, StoreController.getStoresById);
 api.post("/delete/store", md_auth.ensureAuth, StoreController.deleteStoresById);
 api.post("/update/store", md_auth.ensureAuth, StoreController.updateStore);
 api.post("/enable/store", md_auth.ensureAuth, StoreController.enableStore);
-api.get("/all/store", md_auth.ensureAuth, StoreController.getStores);
-
+api.get("/inactive/store", md_auth.ensureAuth, StoreController.getStoresInactive);
+api.get("/active/store", md_auth.ensureAuth, StoreController.getStoresActive);
 
 // Exportamos la configuración
 module.exports = api;
