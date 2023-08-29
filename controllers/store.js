@@ -207,25 +207,51 @@ exports.updateStore = async function (req, res) {
 
 exports.enableStore = async function (req, res) {
   try {
-    const updateQuery = {
-      $set: {
-        name_business: req.body.name_business,
-        description: req.body.description,
-        address: req.body.address,
-        phone: req.body.phone,
-        schedule: req.body.schedule,
-        lan: req.body.lan,
-        lon: req.body.lon,
-        domicilio: req.body.domicilio,
-        status: req.body.status,
-      },
-    };
+    const updateQuery = { $set: {} };
+
+    if (req.body.name_business !== "") {
+      updateQuery.$set.name_business = req.body.name_business;
+    }
+
+    if (req.body.description !== "") {
+      updateQuery.$set.description = req.body.description;
+    }
+
+    if (req.body.address !== "") {
+      updateQuery.$set.address = req.body.address;
+    }
+
+    if (req.body.phone !== "") {
+      updateQuery.$set.phone = req.body.phone;
+    }
+
+    if (req.body.schedule !== "") {
+      updateQuery.$set.schedule = req.body.schedule;
+    }
+
+    if (req.body.lan !== "") {
+      updateQuery.$set.lan = req.body.lan;
+    }
+
+    if (req.body.lon !== "") {
+      updateQuery.$set.lon = req.body.lon;
+    }
+
+    if (req.body.domicilio !== "") {
+      updateQuery.$set.domicilio = req.body.domicilio;
+    }
+
+    if (req.body.status !== "") {
+      updateQuery.$set.status = req.body.status;
+    }
+
     await StoreModel.updateOne(
       {
         _id: req.body._id,
       },
       updateQuery
     );
+
     res.status(200).send({ msg: "Registro actualizado exitosamente" });
   } catch (ex) {
     res.status(500).send({ error: ex.message });
