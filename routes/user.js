@@ -17,6 +17,7 @@ api.put("/put", md_auth.ensureAuth, UserController.updateUser);
 api.put("/put/password", md_auth.ensureAuth, UserController.updatePasswordUser);
 api.post("/get/fields", md_auth.ensureAuth, UserController.getEspecificData);
 api.post("/forgotPassword", UserController.forgotPassword);
+api.get("/getAll", md_auth.ensureAuth, UserController.getAllUsers);
 
 // Exportamos la configuración
 module.exports = api;

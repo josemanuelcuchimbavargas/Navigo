@@ -272,3 +272,16 @@ exports.updatePasswordUser = async function (req, res) {
     res.status(500).send({ error: ex.message });
   }
 };
+
+// Obtener Datos de un usuario
+exports.getAllUsers = async function (req, res) {
+  try {
+    const users = await User.find({
+      deleted_date: { $eq: null },
+    });
+
+    res.status(200).send({ data: users });
+  } catch (ex) {
+    res.status(500).send({ error: ex.message });
+  }
+};
