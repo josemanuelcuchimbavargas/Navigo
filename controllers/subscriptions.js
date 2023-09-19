@@ -62,12 +62,13 @@ exports.getSubscriptions = async function (req, res) {
 async function procesarAnuncios(announcements) {
   try {
     let tempArray = [];
-
     await Promise.all(
       announcements.map(async (a) => {
         const store = await StoreModel.findOne({ _id: a.id_store }).select(
           "name_business logo"
         );
+        console.log("TIENDA SEGUN ESTE ANUNCIO" , a);
+        console.log(store);
         tempArray.push({
           title: a.title,
           description: a.description,
@@ -79,6 +80,7 @@ async function procesarAnuncios(announcements) {
 
     return tempArray;
   } catch (error) {
+    console.log("GENERO ERROR" , error);
     return [];
   }
 }
