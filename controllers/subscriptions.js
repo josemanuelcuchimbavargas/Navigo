@@ -67,7 +67,8 @@ async function procesarAnuncios(announcements) {
         const store = await StoreModel.findOne({ _id: a.id_store }).select(
           "name_business logo"
         );
-        console.log("TIENDA SEGUN ESTE ANUNCIO" , a);
+        console.log("TIENDA SEGUN ESTE ANUNCIO");
+        console.log(a);
         console.log(store);
         tempArray.push({
           title: a.title,
@@ -80,7 +81,8 @@ async function procesarAnuncios(announcements) {
 
     return tempArray;
   } catch (error) {
-    console.log("GENERO ERROR" , error);
+    console.log("GENERO ERROR");
+    console.log(error);
     return [];
   }
 }
