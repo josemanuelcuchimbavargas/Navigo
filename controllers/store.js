@@ -4,6 +4,7 @@ var StoreModel = require("../models/store");
 var ProductsModel = require("../models/products");
 const path = require("path");
 const fs = require("fs");
+const subscriptions = require("../models/subscriptions");
 const ObjectId = require("mongodb").ObjectId;
 
 // Función asíncrona que va a estar esperando por respuestas
@@ -110,6 +111,10 @@ exports.deleteStoresById = async function (req, res) {
 
     if (resultado.deletedCount === 1) {
       const resultadoProducts = await ProductsModel.deleteMany({
+        id_store: ObjectId(req.body._id),
+      });
+
+      const resultadoSubscription = await subscriptions.deleteMany({
         id_store: ObjectId(req.body._id),
       });
 

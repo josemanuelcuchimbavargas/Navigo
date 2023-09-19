@@ -32,11 +32,6 @@ exports.getSubscriptions = async function (req, res) {
     const subscriptionResult = await SubscriptionModel.find({
       id_user: req.user.user_id,
     });
-    console.log("ID DEL USUARIO DEL TOKEN");
-    console.log(req.user.user_id);
-
-    console.log("DATA DE LA SUBSCRIPCION");
-    console.log(subscriptionResult);
 
     // Obtener los anuncios correspondientes a los id_store
     const idStores = subscriptionResult.map((sub) => sub.id_store);
@@ -44,12 +39,6 @@ exports.getSubscriptions = async function (req, res) {
       id_store: { $in: idStores },
       active: true,
     });
-
-    console.log("ID DE LA TIENDA");
-    console.log(idStores);
-
-    console.log("ANUNCIOS DE LAS TIENDAS");
-    console.log(announcements);
 
     let dataAnnouncements = await procesarAnuncios(announcements);
 
@@ -67,9 +56,7 @@ async function procesarAnuncios(announcements) {
         const store = await StoreModel.findOne({ _id: a.id_store }).select(
           "name_business logo"
         );
-        console.log("TIENDA SEGUN ESTE ANUNCIO");
-        console.log(a);
-        console.log(store);
+
         tempArray.push({
           title: a.title,
           description: a.description,
@@ -78,11 +65,8 @@ async function procesarAnuncios(announcements) {
         });
       })
     );
-
     return tempArray;
   } catch (error) {
-    console.log("GENERO ERROR");
-    console.log(error);
     return [];
   }
 }
