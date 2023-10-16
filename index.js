@@ -13,9 +13,9 @@ mongoose.Promise = global.Promise;
 
 const options = {
   cert: fs.readFileSync(
-    "/etc/letsencrypt/live/navigoapi.com-0001/fullchain.pem"
+    "/etc/letsencrypt/live/navigoapi.com/fullchain.pem"
   ),
-  key: fs.readFileSync("/etc/letsencrypt/live/navigoapi.com-0001/privkey.pem"),
+  key: fs.readFileSync("/etc/letsencrypt/live/navigoapi.com/privkey.pem"),
 };
 
 // Usamos el método connect para conectarnos a nuestra base de datos
