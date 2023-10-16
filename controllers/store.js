@@ -300,7 +300,7 @@ exports.getStoresActive = async function (req, res) {
     let Stores = await StoreModel.find({ status: true });
 
     for (let i = 0; i < Stores.length; i++) {
-      const item = stores[i];
+      const item = Stores[i];
 
       let fullText = item.name_business + " " + item.description;
 
@@ -310,7 +310,7 @@ exports.getStoresActive = async function (req, res) {
       // Verifica palabras ofensivas
       let containsBadWords = tokens.some((token) => filter.isProfane(token));
 
-      stores[i]["containsBadWords"] = containsBadWords;
+      Stores[i]["containsBadWords"] = containsBadWords;
     }
 
     res.status(200).send({ data: Stores });
