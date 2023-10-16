@@ -311,6 +311,7 @@ exports.getStoresActive = async function (req, res) {
       let containsBadWords = tokens.some((token) => filter.isProfane(token));
 
       Stores[i]["containsBadWords"] = containsBadWords;
+      console.log("CONTAINS BARD WORDS" + containsBadWords);
     }
 
     res.status(200).send({ data: Stores });
