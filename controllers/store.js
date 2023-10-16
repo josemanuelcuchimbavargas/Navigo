@@ -273,7 +273,7 @@ exports.enableStore = async function (req, res) {
 
 exports.getStoresInactive = async function (req, res) {
   try {
-    const Stores = await StoreModel.find({ status: false });
+    let Stores = await StoreModel.find({ status: false });
 
     for (let i = 0; i < Stores.length; i++) {
       const item = stores[i];
@@ -297,7 +297,21 @@ exports.getStoresInactive = async function (req, res) {
 
 exports.getStoresActive = async function (req, res) {
   try {
-    const Stores = await StoreModel.find({ status: true });
+    let Stores = await StoreModel.find({ status: true });
+
+    for (let i = 0; i < Stores.length; i++) {
+      const item = stores[i];
+
+      let fullText = item.name_business + " " + item.description;
+
+      // Tokeniza el texto
+      let tokens = tokenizer.tokenize(fullText);
+
+      // Verifica palabras ofensivas
+      let containsBadWords = tokens.some((token) => filter.isProfane(token));
+
+      stores[i]["containsBadWords"] = containsBadWords;
+    }
 
     res.status(200).send({ data: Stores });
   } catch (ex) {
