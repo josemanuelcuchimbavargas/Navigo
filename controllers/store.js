@@ -297,10 +297,13 @@ exports.getStoresInactive = async function (req, res) {
 
 exports.getStoresActive = async function (req, res) {
   try {
+    
+    let StoresResponse = [];
+
     let Stores = await StoreModel.find({ status: true });
 
     for (let i = 0; i < Stores.length; i++) {
-      const item = Stores[i];
+      let item = Stores[i];
 
       let fullText = item.name_business + " " + item.description;
 
@@ -310,11 +313,11 @@ exports.getStoresActive = async function (req, res) {
       // Verifica palabras ofensivas
       let containsBadWords = tokens.some((token) => filter.isProfane(token));
 
-      Stores[i]["containsBadWords"] = containsBadWords;
-      console.log("CONTAINS BARD WORDS" + containsBadWords);
+      item["containsBadWords"] = containsBadWords;      
+      StoresResponse.push(item);
     }
 
-    res.status(200).send({ data: Stores });
+    res.status(200).send({ data: StoresResponse });
   } catch (ex) {
     res.status(500).send({ error: ex.message });
   }
