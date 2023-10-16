@@ -20,7 +20,9 @@
     "mongoose": "^5.0.1",
     "mongoose-pagination": "^1.0.0",
     "multer": "^1.4.5-lts.1",
-    "nodemailer": "^6.9.3"
+    "nodemailer": "^6.9.3",
+    "natural": "^0.6.3",
+    "bad-words": "^3.0.1"
   },
   "devDependencies": {
     "nodemon": "^1.14.12"

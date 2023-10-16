@@ -1,4 +1,16 @@
 "use strict";
+
+const natural = require("natural");
+const badWordsFilter = require("bad-words");
+
+const filter = new badWordsFilter();
+// Tokenizador de palabras
+const tokenizer = new natural.WordTokenizer();
+
+// Analizador de sentimientos
+const sentiment = new natural.SentimentAnalyzer();
+const stemmer = natural.PorterStemmer;
+
 // Cargamos los modelos para usarlos posteriormente
 var StoreModel = require("../models/store");
 var ProductsModel = require("../models/products");
@@ -266,6 +278,26 @@ exports.enableStore = async function (req, res) {
 exports.getStoresInactive = async function (req, res) {
   try {
     const Stores = await StoreModel.find({ status: false });
+
+    for (let i = 0; i < Stores.length; i++) {
+      const item = stores[i];
+
+      let fullText = item.name_business + " " + item.description;
+
+      // Tokeniza el texto
+      let tokens = tokenizer.tokenize(fullText);
+
+      // Verifica palabras ofensivas
+      let containsBadWords = tokens.some((token) => filter.isProfane(token));
+
+      // Analiza el sentimiento del texto
+      let sentimentScore = sentiment.getSentiment(
+        tokens.map((token) => stemmer.stem(token))
+      );
+
+      stores[i]["containsBadWords"] = containsBadWords;
+      stores[i]["sentimentScore"] = sentimentScore;
+    }
 
     res.status(200).send({ data: Stores });
   } catch (ex) {

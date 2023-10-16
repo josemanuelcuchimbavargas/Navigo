@@ -14,13 +14,13 @@ const removeAccents = (str) => {
     .normalize();
 };
 
-function convertKM(latUsuario, lonUsuario, latTienda, lonTienda) {
+function convertKM(latUsuario, lonUsuario, latNegocio, lonNegocio) {
     const radioTierra = 6371; // Radio de la Tierra en kilómetros
   
     const lat1 = degToRad(latUsuario);
     const lon1 = degToRad(lonUsuario);
-    const lat2 = degToRad(latTienda);
-    const lon2 = degToRad(lonTienda);
+    const lat2 = degToRad(latNegocio);
+    const lon2 = degToRad(lonNegocio);
   
     const dLat = lat2 - lat1;
     const dLon = lon2 - lon1;
