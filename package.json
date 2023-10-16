@@ -10,6 +10,7 @@
   "author": "Jose Manuel Cuchimba Vargas",
   "license": "MIT",
   "dependencies": {
+    "bad-words": "^3.0.4",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.18.2",
     "connect-multiparty": "^2.1.0",
@@ -20,9 +21,8 @@
     "mongoose": "^5.0.1",
     "mongoose-pagination": "^1.0.0",
     "multer": "^1.4.5-lts.1",
-    "nodemailer": "^6.9.3",
-    "natural": "^0.6.3",
-    "bad-words": "^3.0.1"
+    "natural": "^6.8.0",
+    "nodemailer": "^6.9.3"
   },
   "devDependencies": {
     "nodemon": "^1.14.12"
