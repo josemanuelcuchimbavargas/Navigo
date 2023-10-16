@@ -297,13 +297,30 @@ exports.getStoresInactive = async function (req, res) {
 
 exports.getStoresActive = async function (req, res) {
   try {
-    
     let StoresResponse = [];
 
     let Stores = await StoreModel.find({ status: true });
 
     for (let i = 0; i < Stores.length; i++) {
-      let item = Stores[i];
+
+      let item = {
+        name_business: Stores[i].name_business,
+        nit: Stores[i].nit,
+        description: Stores[i].description,
+        categories: Stores[i].categories,
+        address: Stores[i].address,
+        phone: Stores[i].phone,
+        schedule: Stores[i].schedule,
+        lan: Stores[i].lan,
+        lon: Stores[i].lon,
+        logo: Stores[i].logo,
+        payments_methods: Stores[i].payments_methods,
+        domicilio: Stores[i].domicilio,
+        user_id: Stores[i].user_id,
+        status: Stores[i].status,
+        distance: Stores[i].distance,
+        containsBadWords: null
+      };
 
       let fullText = item.name_business + " " + item.description;
 
@@ -313,7 +330,8 @@ exports.getStoresActive = async function (req, res) {
       // Verifica palabras ofensivas
       let containsBadWords = tokens.some((token) => filter.isProfane(token));
 
-      item["containsBadWords"] = containsBadWords;      
+      item.containsBadWords = containsBadWords;
+
       StoresResponse.push(item);
     }
 
